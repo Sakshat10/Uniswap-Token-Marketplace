@@ -85,3 +85,23 @@ export async function getTokenAddress(tokenName){
         return parseErrorMsg(e);
     }
 }
+
+export async function increaseAllow(tokenName, amount){
+    try{
+        const contractObj = await contract();
+        const address = await contractObj.getTokenAddress(tokenName);
+
+        const tokenContractObj = await tokenContract(address);
+        const data = await tokenContractObj.approve(
+            "0xcAcD0A955ac5915F42Aa7B91DC40B6AE5ADfaa2d",
+            toWei(amount)
+        );
+
+        const receipt = await data.wait();
+        return receipt;
+    }
+    catch(e){
+        return parseErrorMsg(e);
+    }
+}
+
