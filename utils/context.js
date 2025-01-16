@@ -124,3 +124,8 @@ export async function getAllHistory(){
         return parseErrorMsg(e);
     }
 }
+
+function toWei(amount){
+    const toWei = ethers.utils.parseUnits(amount.toString());
+    return toWei.toString();
+}
