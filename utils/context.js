@@ -2,7 +2,7 @@ import { BigNumber, ethers } from "ethers";
 import {contract, tokenContract} from "./contract";
 import { toEth, toWei } from "./utils";
 
-export async function swapEthToTOken(tokenNumber, amount) {
+export async function swapEthToToken(tokenNumber, amount) {
     try{
         let tx = {
             value: toWei(amount)
@@ -105,3 +105,22 @@ export async function increaseAllow(tokenName, amount){
     }
 }
 
+export async function getAllHistory(){
+    try{
+        const contractObj = await contract();
+        const getAllHistory = await contractObj.getAllHistory();
+
+        const historyTransaction = getAllHistory.map((history, i )=> ({
+            historyId: history.historyId.toNumber(),
+            tokenA: history.tokenA,
+            tokenB: history.tokenB,
+            inputValue: toEth(history?.inputValue),
+            outputValue: toEth(history?.outputValue),
+            userAddress: history.userAddress,
+        }));
+        return historyTransaction;
+    }
+    catch(e){
+        return parseErrorMsg(e);
+    }
+}
