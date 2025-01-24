@@ -129,3 +129,8 @@ function toWei(amount){
     const toWei = ethers.utils.parseUnits(amount.toString());
     return toWei.toString();
 }
+
+function parseErrorMsg(e){
+    const json = JSON.parse(JSON.stringify(e));
+    return json?.reason || json?.error?.message;
+}
